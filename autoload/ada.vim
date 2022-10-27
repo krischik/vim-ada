@@ -475,6 +475,7 @@ endfunction ada#Switch_Syntax_Option
 " Args:	    Additional parameter.
 "
 function ada#Map_Menu (Text, Keys, Command, Function, Args)
+   return
    let l:mapping  = escape(g:mapleader . a:Keys , '\')
    let l:menutext = escape(a:Text, ' ')
 
