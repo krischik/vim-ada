@@ -103,7 +103,8 @@ syntax keyword  adaSpecial          <>
 
 " Section: parenthesis {{{1
 "
-syntax match adaSpecial  "[:;().,]"
+syntax match adaSpecial  "[:().,]"
+syntax match adaSpecial  ";" nextgroup=adaSemicolonComment,adaSemiKeyword,adaSemiOr,adaSemiWith skipwhite skipempty
 
 " Section: rainbow color {{{1
 "
@@ -212,6 +213,7 @@ syntax match    adaConditional  "\<else\>"
 syntax match    adaConditional  "\<end\s\+if\>"
 syntax match    adaConditional  "\<end\s\+case\>"
 syntax match    adaConditional  "\<end\s\+select\>"
+syntax match    adaSemiOr       "\<or\>" contained
 syntax keyword  adaConditional  if case select
 syntax keyword  adaConditional  elsif when
 
@@ -249,15 +251,15 @@ else
    syntax match adaKeyword      "\<with\>"
    syntax match adaKeyword      "\<use\>"
    syntax match adaBeginWith    "^\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc
-   syntax match adaSemiWith     ";\s*\zs\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc
+   syntax match adaSemiWith            "\%(\%(with\%(\s\+type\)\=\)\|\%(use\)\)\>" contains=adaInc contained
    syntax match adaInc          "\<with\>" contained contains=NONE
    syntax match adaInc          "\<with\s\+type\>" contained contains=NONE
    syntax match adaInc          "\<use\>" contained contains=NONE
    " Recognize "with null record" as a keyword (even the "record").
    syntax match adaKeyword      "\<with\s\+null\s\+record\>"
    " Consider generic formal parameters of subprograms and packages as keywords.
-   syntax match adaKeyword      ";\s*\zswith\s\+\%(function\|procedure\|package\)\>"
    syntax match adaKeyword      "^\s*\zswith\s\+\%(function\|procedure\|package\)\>"
+   syntax match adaSemiKeyword         "with\s\+\%(function\|procedure\|package\)\>" contained
 endif
 
 " Section: String and character constants. {{{1
@@ -274,6 +276,14 @@ syntax keyword adaTodo contained TODO FIXME XXX NOTE
 syntax region  adaComment
     \ oneline
     \ contains=adaTodo,adaLineError,@Spell
+    \ start="--"
+    \ end="$"
+
+syntax region  adaSemicolonComment
+    \ oneline
+    \ contains=adaTodo,adaLineError,@Spell
+    \ nextgroup=adaSemicolonComment,adaSemiOr skipwhite skipEmpty
+    \ contained
     \ start="--"
     \ end="$"
 
@@ -317,33 +327,36 @@ endif
 
 " Section: The default methods for highlighting. Can be overridden later. {{{1
 "
-highlight def link adaCharacter     Character
-highlight def link adaComment       Comment
-highlight def link adaConditional   Conditional
-highlight def link adaKeyword       Keyword
-highlight def link adaLabel         Label
-highlight def link adaNumber        Number
-highlight def link adaSign          Number
-highlight def link adaOperator      Operator
-highlight def link adaPreproc       PreProc
-highlight def link adaRepeat        Repeat
-highlight def link adaSpecial       Special
-highlight def link adaStatement     Statement
-highlight def link adaString        String
-highlight def link adaStructure     Structure
-highlight def link adaTodo          Todo
-highlight def link adaType          Type
-highlight def link adaTypedef       Typedef
-highlight def link adaStorageClass  StorageClass
-highlight def link adaBoolean       Boolean
-highlight def link adaException     Exception
-highlight def link adaAttribute     Tag
-highlight def link adaInc           Include
-highlight def link adaError         Error
-highlight def link adaSpaceError    Error
-highlight def link adaLineError     Error
-highlight def link adaBuiltinType   Type
-highlight def link adaAssignment    Special
+highlight def link adaCharacter             Character
+highlight def link adaComment               Comment
+highlight def link adaSemicolonComment      adaComment
+highlight def link adaConditional           Conditional
+highlight def link adaSemiOr                adaConditional
+highlight def link adaKeyword               Keyword
+highlight def link adaSemiKeyword           adaKeyword
+highlight def link adaLabel                 Label
+highlight def link adaNumber                Number
+highlight def link adaSign                  Number
+highlight def link adaOperator              Operator
+highlight def link adaPreproc               PreProc
+highlight def link adaRepeat                Repeat
+highlight def link adaSpecial               Special
+highlight def link adaStatement             Statement
+highlight def link adaString                String
+highlight def link adaStructure             Structure
+highlight def link adaTodo                  Todo
+highlight def link adaType                  Type
+highlight def link adaTypedef               Typedef
+highlight def link adaStorageClass          StorageClass
+highlight def link adaBoolean               Boolean
+highlight def link adaException             Exception
+highlight def link adaAttribute             Tag
+highlight def link adaInc                   Include
+highlight def link adaError                 Error
+highlight def link adaSpaceError            Error
+highlight def link adaLineError             Error
+highlight def link adaBuiltinType           Type
+highlight def link adaAssignment            Special
 
 " Subsection: Begin, End {{{2
 "
@@ -361,9 +374,8 @@ endif
 
 " Section: sync {{{1
 "
-" We don't need to look backwards to highlight correctly;
-" this speeds things up greatly.
-syntax sync minlines=1 maxlines=1
+" need to find ; before OR in SELECT statements
+syntax sync minlines=5 maxlines=5
 
 finish " 1}}}
 
