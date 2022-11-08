@@ -111,8 +111,15 @@ if !exists ("b:match_words")  &&
       \ s:notend . '\<if\>:\<elsif\>:\<\%(or\s\)\@3<!else\>:\<end\s\+if\>,' .
       \ s:notend . '\<case\>:\<when\>:\<end\s\+case\>,' .
       \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\s\+loop\>,' .
-      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
+      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\|select\)\>\)\@!\a\)\@=,' .
       \ s:notend . '\<record\>:\<end\s\+record\>'
+   " requires ELSE indent to match that of SELECT so we don't match ELSE in nested IF statements
+   let b:match_words .=
+      \ ',\%(^\(\s*\)\)\@<=select\>' .
+      \   ':\<or\>\%(\selse\)\@!' .
+      \   ':\%(^\1\)\@<=\%(or\s\)\@3<!else\>' .
+      \   ':\<then\s\+abort\>' .
+      \ ':\<end\s\+select\>'
    let b:undo_ftplugin .= " | unlet! b:match_words"
    let b:match_skip = 's:Comment\|String\|Operator'
 endif
