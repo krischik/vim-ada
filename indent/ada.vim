@@ -282,7 +282,7 @@ function GetAdaIndent()
       let ind = s:EndBlockIndent( ind, lnum, 'case\>.*\<is\>', 'end\>\s*\<case\>' )
    elseif line =~ '^\s*end\>'
       " General case for end
-      let ind = s:MainBlockIndent( ind, lnum, '\(if\|while\|for\|loop\|accept\|begin\|record\|case\|exception\|package\)\>', '' )
+      let ind = s:MainBlockIndent( ind, lnum, '\(if\|while\|for\|loop\|accept\|begin\|record\|case\|exception\|package\|task\)\>', '' )
    elseif line =~ '^\s*exception\>'
       let ind = s:MainBlockIndent( ind, lnum, 'begin\>', '' )
    elseif line =~ '^\s*then\>'
