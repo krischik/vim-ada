@@ -43,11 +43,58 @@ endif
 let s:keepcpo= &cpo
 set cpo&vim
 
+" NOTE: let-heredocs are a recent feature addition
+" let s:BlockStartPatterns = [
+" 	 \ 'if\>',
+" 	 \ 'while\>',
+" 	 \ 'else\>',
+" 	 \ 'elsif\>',
+" 	 \ 'loop\>',
+" 	 \ 'for\>.*\<\(loop\|use\)\>',
+" 	 \ 'declare\>',
+" 	 \ 'begin\>',
+" 	 \ 'type\>.*\<is\>[^;]*$',
+" 	 \ '\(type\>.*\)\=\<record\>',
+" 	 \ 'procedure\>',
+" 	 \ 'function\>',
+" 	 \ 'accept\>',
+" 	 \ 'do\>',
+" 	 \ 'task\>',
+" 	 \ 'package\>',
+" 	 \ 'then\>',
+" 	 \ 'when\>',
+" 	 \ 'is\>',
+" 	 \ 'private\>'
+" \]
+
+let s:BlockStartPatterns =<< trim EOS
+   if\>
+   while\>
+   else\>
+   elsif\>
+   loop\>
+   for\>.*\<\(loop\|use\)\>
+   declare\>
+   begin\>
+   type\>.*\<is\>[^;]*$
+   \(type\>.*\)\=\<record\>
+   procedure\>
+   function\>
+   accept\>
+   do\>
+   task\>
+   package\>
+   then\>
+   when\>
+   is\>
+   private\>
+EOS
+
 if exists("g:ada_with_gnat_project_files")
-   let s:AdaBlockStart = '^\s*\(if\>\|while\>\|else\>\|elsif\>\|loop\>\|for\>.*\<\(loop\|use\)\>\|declare\>\|begin\>\|type\>.*\<is\>[^;]*$\|\(type\>.*\)\=\<record\>\|procedure\>\|function\>\|accept\>\|do\>\|task\>\|package\>\|project\>\|then\>\|when\>\|is\>\|private\>\)'
-else
-   let s:AdaBlockStart = '^\s*\(if\>\|while\>\|else\>\|elsif\>\|loop\>\|for\>.*\<\(loop\|use\)\>\|declare\>\|begin\>\|type\>.*\<is\>[^;]*$\|\(type\>.*\)\=\<record\>\|procedure\>\|function\>\|accept\>\|do\>\|task\>\|package\>\|then\>\|when\>\|is\>\|private\>\)'
+   call add(s:BlockStartPatterns, 'project\>')
 endif
+
+let s:AdaBlockStart = '^\s*\(' . join(s:BlockStartPatterns, '\|') . '\)'
 
 " Section: s:MainBlockIndent {{{1
 "
