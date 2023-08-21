@@ -213,7 +213,7 @@ call ada#Map_Menu (
    \ '''rainbow_color''')
 call ada#Map_Menu (
    \'Toggle Standard Types',
-   \ 'at',
+   \ 'tt',
    \ 'AdaTypes',
    \ 'call ada#Switch_Syntax_Option',
    \ '''standard_types''')

@@ -42,16 +42,28 @@ if !exists("g:alire")
       \ 'call alire.Clean',
       \ '')
    call ada#Map_Menu (
+      \ 'Pretty Print',
+      \ 'ap',
+      \ 'AlirePretty',
+      \ 'call alire.Pretty',
+      \ '')
+   call ada#Map_Menu (
+      \ 'Generate gnatdoc',
+      \ 'ad',
+      \ 'AlireDoc',
+      \ 'call alire.Doc',
+      \ '')
+   call ada#Map_Menu (
       \ 'Run Project Executable',
       \ 'ar',
       \ 'AlireRun',
       \ 'call alire.Run',
       \ '')
    call ada#Map_Menu (
-      \ 'Set Project options…',
-      \ 'ao',
-      \ 'AlireSet',
-      \ 'call alire.Set_Options',
+      \ 'Run Unit tests',
+      \ 'at',
+      \ 'AlireTest',
+      \ 'call alire.Test',
       \ '')
    call ada#Map_Menu (
       \ 'Read Vim session',
