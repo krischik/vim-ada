@@ -8,7 +8,7 @@
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Preben Randhol.
 "               Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.4.0
+"      Version: 5.5.0
 "               http://www.dwheeler.com/vim
 "      History: 24.05.2006 MK Unified Headers
 "               26.05.2006 MK ' should not be in iskeyword.
@@ -25,6 +25,7 @@
 "               25.10.2022 MK Add Alire compiler support
 "               26.10.2022 MK Typo in rainbow_parenthesis function call
 "               05.11.2022 DK Use non capturing regex groups in syntax patterns
+"               21.08.2023 MK Release 5.5.0
 "        Usage: Use dein to install
 "    Help Page: help ft-ada-syntax
 "------------------------------------------------------------------------------

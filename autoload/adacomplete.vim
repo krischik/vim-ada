@@ -4,7 +4,7 @@
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.4.0
+"      Version: 5.5.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK improved search for begin of word.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -16,6 +16,7 @@
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-omni
 "------------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "               Bartek Jasicki <thindil@laeran.pl>
 "		Ned Okie <nokie@radford.edu>
-"      Version: 5.4.0
+"      Version: 5.5.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "               15.10.2006 MK Bram's suggestion for runtime integration
@@ -16,6 +16,7 @@
 "		26.10.2022 MK Fix mapping conflict
 "		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
 "			      plug in
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------

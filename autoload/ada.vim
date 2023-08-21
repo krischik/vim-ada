@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.4.0
+"      Version: 5.5.0
 "      History: 24.05.3.06 MK Unified Headers
 "		26.05.3.06 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -34,6 +34,7 @@
 "			      mappings.
 "		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
 "			      plug in
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
