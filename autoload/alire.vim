@@ -79,7 +79,6 @@ function alire#New ()						     " {{{1
       \ 'Pretty'	   : function ('alire#Pretty'),
       \ 'Doc'		   : function ('alire#Doc'),
       \ 'Get_Command'      : function ('alire#Get_Command'),
-      \ 'Set_Options'	   : function ('alire#Set_Options'),
       \ 'Build_Command'    : 'alr build',
       \ 'Build_Options'	   : '--development',
       \ 'Run_Command'      : 'alr run',

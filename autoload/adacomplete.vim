@@ -11,7 +11,7 @@
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested not to use include protection for
 "			      autoload
-"		05.11.2006 MK Bram suggested against using setlocal omnifunc 
+"		05.11.2006 MK Bram suggested against using setlocal omnifunc
 "		05.11.2006 MK Bram suggested to save on spaces
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub and dein to publish new versions
