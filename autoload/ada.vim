@@ -8,7 +8,7 @@
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
 " Contributors: Doug Kearns <dougkearns@gmail.com>
-"      Version: 5.3.2
+"      Version: 5.5.0
 "      History: 24.05.3.06 MK Unified Headers
 "		26.05.3.06 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -21,6 +21,7 @@
 "		09.05.2007 MK Session just won't work no matter how much
 "			      tweaking is done
 "		19.09.2007 NO still some mapleader problems
+"		31.01.2017 MB fix more mapleader problems
 "		08.10.2020 DK Add some keyword
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub and dein to publish new versions
@@ -31,6 +32,9 @@
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
 "		02.11.2022 MK Enhancement #19 additional ways to disable key
 "			      mappings.
+"		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
+"			      plug in
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
@@ -38,6 +42,8 @@
 if version < 700
    finish
 endif
+let s:keepcpo= &cpo
+set cpo&vim
 
 " Section: Constants {{{1
 "
@@ -72,13 +78,13 @@ if exists ('g:ada_with_gnat_project_files')
     endfor
 endif
 
-" Section: add	standart exception {{{2
+" Section: add	standard exception {{{2
 "
 for Item in ['Constraint_Error', 'Program_Error', 'Storage_Error', 'Tasking_Error', 'Status_Error', 'Mode_Error', 'Name_Error', 'Use_Error', 'Device_Error', 'End_Error', 'Data_Error', 'Layout_Error', 'Length_Error', 'Pattern_Error', 'Index_Error', 'Translation_Error', 'Time_Error', 'Argument_Error', 'Tag_Error', 'Picture_Error', 'Terminator_Error', 'Conversion_Error', 'Pointer_Error', 'Dereference_Error', 'Update_Error', 'Assertion_Error', 'Capacity_Error', 'Dispatching_Domain_Error', 'Dispatching_Policy_Error', 'Encoding_Error', 'Group_Budget_Error', 'Unknown_Zone_Error']
     let g:ada#Keywords += [{
 	    \ 'word':  Item,
 	    \ 'menu':  'exception',
-	    \ 'info':  'Ada standart exception.',
+	    \ 'info':  'Ada standard exception.',
 	    \ 'kind':  'x',
 	    \ 'icase': 1}]
 endfor
@@ -147,7 +153,6 @@ endif
 " Section: add Ada Pragmas {{{2
 "
 for Item in ['All_Calls_Remote', 'Assert', 'Assertion_Policy', 'Asynchronous', 'Atomic', 'Atomic_Components', 'Attach_Handler', 'Controlled (Obsolescent)', 'Convention', 'CPU', 'Default_Storage_Pool', 'Detect_Blocking', 'Discard_Names', 'Dispatching_Domain', 'Elaborate', 'Elaborate_All', 'Elaborate_Body', 'Export', 'Import', 'Independent', 'Independent_Components', 'Inline', 'Inspection_Point', 'Interface (Obsolescent)', 'Interrupt_Handler', 'Interrupt_Priority', 'Linker_Options', 'List', 'Locking_Policy', 'Memory_Size (Obsolescent)', 'No_Return', 'Normalize_Scalars', 'Optimize', 'Pack', 'Page', 'Partition_Elaboration_Policy', 'Preelaborable_Initialization', 'Preelaborate', 'Priority', 'Priority_Specific_Dispatching', 'Profile', 'Pure', 'Queueing_Policy', 'Relative_Deadline', 'Remote_Call_Interface', 'Remote_Types', 'Restrictions', 'Reviewable', 'Shared (Obsolescent)', 'Shared_Passive', 'Storage_Size', 'Storage_Unit (Obsolescent)', 'Suppress', 'System_Name (Obsolescent)', 'Task_Dispatching_Policy', 'Unchecked_Union', 'Unsuppress', 'Volatile', 'Volatile_Components']
-
     let g:ada#Keywords += [{
 	    \ 'word':  Item,
 	    \ 'menu':  'pragma',
@@ -159,7 +164,7 @@ endfor
 " Section: add GNAT Pragmas {{{3
 "
 if exists ('g:ada_gnat_extensions')
-    for Item in ['Abort_Defer', 'Ada_83', 'Ada_95', 'Ada_05', 'Ada_12', 'Annotate', 'Ast_Entry', 'C_Pass_By_Copy', 'Comment', 'Common_Object', 'Compile_Time_Warning', 'Complex_Representation', 'Component_Alignment', 'Convention_Identifier', 'CPP_Class', 'CPP_Constructor', 'CPP_Virtual', 'CPP_Vtable', 'Debug', 'Elaboration_Checks', 'Eliminate', 'Export_Exception', 'Export_Function', 'Export_Object', 'Export_Procedure', 'Export_Value', 'Export_Valued_Procedure', 'Extend_System', 'External', 'External_Name_Casing', 'Finalize_Storage_Only', 'Float_Representation', 'Ident', 'Import_Exception', 'Import_Function', 'Import_Object', 'Import_Procedure', 'Import_Valued_Procedure', 'Initialize_Scalars', 'Inline_Always', 'Inline_Generic', 'Interface_Name', 'Interrupt_State', 'Keep_Names', 'License', 'Link_With', 'Linker_Alias', 'Linker_Section', 'Long_Float', 'Machine_Attribute', 'Main_Storage', 'Obsolescent', 'Passive', 'Polling', 'Profile_Warnings', 'Propagate_Exceptions', 'Psect_Object', 'Pure_Function', 'Restriction_Warnings', 'Source_File_Name', 'Source_File_Name_Project', 'Source_Reference', 'Stream_Convert', 'Style_Checks', 'Subtitle', 'Suppress_All', 'Suppress_Exception_Locations', 'Suppress_Initialization', 'Task_Info', 'Task_Name', 'Task_Storage', 'Thread_Body', 'Time_Slice', 'Title', 'Unimplemented_Unit', 'Universal_Data', 'Unreferenced', 'Unreserve_All_Interrupts', 'Use_VADS_Size', 'Validity_Checks', 'Warnings', 'Weak_External']
+    for Item in ['Abort_Defer', 'Ada_83', 'Ada_95', 'Ada_05', 'Ada_12', 'Ada_2022', 'Annotate', 'Ast_Entry', 'C_Pass_By_Copy', 'Comment', 'Common_Object', 'Compile_Time_Warning', 'Complex_Representation', 'Component_Alignment', 'Convention_Identifier', 'CPP_Class', 'CPP_Constructor', 'CPP_Virtual', 'CPP_Vtable', 'Debug', 'Elaboration_Checks', 'Eliminate', 'Export_Exception', 'Export_Function', 'Export_Object', 'Export_Procedure', 'Export_Value', 'Export_Valued_Procedure', 'Extend_System', 'External', 'External_Name_Casing', 'Finalize_Storage_Only', 'Float_Representation', 'Ident', 'Import_Exception', 'Import_Function', 'Import_Object', 'Import_Procedure', 'Import_Valued_Procedure', 'Initialize_Scalars', 'Inline_Always', 'Inline_Generic', 'Interface_Name', 'Interrupt_State', 'Keep_Names', 'License', 'Link_With', 'Linker_Alias', 'Linker_Section', 'Long_Float', 'Machine_Attribute', 'Main_Storage', 'Obsolescent', 'Passive', 'Polling', 'Profile_Warnings', 'Propagate_Exceptions', 'Psect_Object', 'Pure_Function', 'Restriction_Warnings', 'Source_File_Name', 'Source_File_Name_Project', 'Source_Reference', 'Stream_Convert', 'Style_Checks', 'Subtitle', 'Suppress_All', 'Suppress_Exception_Locations', 'Suppress_Initialization', 'Task_Info', 'Task_Name', 'Task_Storage', 'Thread_Body', 'Time_Slice', 'Title', 'Unimplemented_Unit', 'Universal_Data', 'Unreferenced', 'Unreserve_All_Interrupts', 'Use_VADS_Size', 'Validity_Checks', 'Warnings', 'Weak_External']
 	let g:ada#Keywords += [{
 		\ 'word':  Item,
 		\ 'menu':  'pragma',
@@ -168,7 +173,7 @@ if exists ('g:ada_gnat_extensions')
 		\ 'icase': 1}]
     endfor
 endif
-" 1}}}
+" }}}1
 
 " Section: g:ada#Ctags_Kinds {{{1
 "
@@ -216,7 +221,7 @@ function ada#Word (...)
    let l:Line = substitute (getline (l:Line_Nr), g:ada#Comment, '', '' )
 
    " Cope with tag searching for items in comments; if we are, don't loop
-   " backards looking for previous lines
+   " backwards looking for previous lines
    if l:Column_Nr > strlen(l:Line)
       " We were in a comment
       let l:Line = getline(l:Line_Nr)
@@ -363,7 +368,7 @@ endfunction ada#Completion_End
 "
 function ada#Switch_Session (New_Session)
    "
-   " you should not save to much date into the seession since they will
+   " you should not save to much date into the session since they will
    " be sourced
    "
    let l:sessionoptions=&sessionoptions
@@ -373,7 +378,7 @@ function ada#Switch_Session (New_Session)
 
       if a:New_Session != v:this_session
 	 "
-	 "  We actualy got a new session - otherwise there
+	 "  We actually got a new session - otherwise there
 	 "  is nothing to do.
 	 "
 	 if strlen (v:this_session) > 0
@@ -489,14 +494,14 @@ function ada#Map_Menu (Text, Keys, Command, Function, Args)
 	 if a:Args == ''
 	    execute "command! -nargs=* " . a:Command  . " :" . a:Function . "(<f-args>)"
 	    execute "nnoremap <unique>"  . l:mapping  .                        " :" . a:Command . "<CR>"
-	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
 	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>"  . l:mapping . " :" . a:Command . "<CR>"
 	 else
 	    execute "command! " . a:Command . " :" . a:Function . "(" . a:Args . ")"
 	    execute "nnoremap <unique>"  . l:mapping  .                        " :" . a:Command . "<CR>"
-	    execute "inoremap <unique>"  . l:mapping  .                   " <C-O>:" . a:Command . "<CR>"
 	    execute "50amenu " . "&Ada." . l:menutext . "<Tab>:" . l:mapping . " :" . a:Command . "<CR>"
 	 endif
+	 " TODO: consider removing buffer-specific commands
+	 let b:undo_ftplugin .= " | silent! execute 'nunmap "  . l:mapping . "'"
       endif
    else
       if a:Args == ''
@@ -517,11 +522,12 @@ lockvar  g:ada#Comment
 lockvar! g:ada#Keywords
 lockvar! g:ada#Ctags_Kinds
 
-finish " 1}}}
+let &cpo = s:keepcpo
+unlet s:keepcpo
+
+finish " }}}1
 
 "------------------------------------------------------------------------------
-"   Copyright (C) 2006 … 2020 Martin Krischik
-"
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.
 "------------------------------------------------------------------------------
 " vim: set textwidth=78 wrap tabstop=8 shiftwidth=3 softtabstop=3 noexpandtab :

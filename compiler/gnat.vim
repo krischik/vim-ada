@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "               Bartek Jasicki <thindil@laeran.pl>
 "		Ned Okie <nokie@radford.edu>
-"      Version: 5.3.0
+"      Version: 5.5.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "               15.10.2006 MK Bram's suggestion for runtime integration
@@ -14,6 +14,9 @@
 "		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
 "		26.10.2022 MK Fix mapping conflict
+"		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
+"			      plug in
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
@@ -23,6 +26,8 @@ if (exists("current_compiler")	    &&
    \ version < 700
    finish
 endif
+let s:keepcpo= &cpo
+set cpo&vim
 
 let current_compiler = "gnat"
 
@@ -38,20 +43,20 @@ if !exists("g:gnat")
 
    call ada#Map_Menu (
       \ 'Pretty Print',
-      \ 'gp'
-      \ ':GnatPretty',
+      \ 'gp',
+      \ 'GnatPretty',
       \ 'call gnat.Pretty',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project file\.\.\.',
-      \ 'gp'
-      \ ':SetProject',
+      \ 'gP',
+      \ 'SetProject',
       \ 'call gnat.Set_Project_File',
       \ '')
    call ada#Map_Menu (
       \ 'Set Project options\.\.\.',
-      \ 'go'
-      \ ':SetOptions',
+      \ 'go',
+      \ 'SetOptions',
       \ 'call gnat.Set_Options',
       \ '')
 
@@ -68,7 +73,10 @@ endif
 execute "CompilerSet makeprg="     . escape (g:gnat.Get_Command('Make'), ' ')
 execute "CompilerSet errorformat=" . escape (g:gnat.Error_Format, ' ')
 
-finish " 1}}}
+let &cpo = s:keepcpo
+unlet s:keepcpo
+
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

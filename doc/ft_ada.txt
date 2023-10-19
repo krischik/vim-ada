@@ -41,7 +41,7 @@ to change how loops are displayed, enter the command ":hi Repeat" followed by
 the colour specification; on simple terminals the colour specification
 ctermfg=White often shows well).
 
-There are several options you can select in this Ada mode. See|ft-ada-options|
+There are several options you can select in this Ada mode. See |ft-ada-options|
 for a complete list.
 
 To enable them, assign a value to the option.  For example, to turn one on:
@@ -78,7 +78,7 @@ The Ada plug-in provides support for:
  - comment handling	(|'comments'|, |'commentstring'|)
 
 The plug-in only activates the features of the Ada mode whenever an Ada
-files is opened and add adds Ada related entries to the main and pop-up menu.
+file is opened and adds Ada related entries to the main and pop-up menu.
 
 ==============================================================================
 3. Omni Completion ~
@@ -101,7 +101,7 @@ version is available from (https://ctags.io).
 								*ada-compiler*
 
 The Ada mode supports more than one Ada compiler and will automatically load the
-compiler setting |g:ada_default_compiler| whenever an Ada source is opened. The
+compiler set in |g:ada_default_compiler| whenever an Ada source is opened. The
 provided compiler plug-ins are split into the actual compiler plug-in and a
 collection of support functions and variables. This allows the easy
 development of specialized compiler plug-ins fine-tuned to your development
@@ -111,8 +111,8 @@ environment.
 4.1 GNAT ~
 							       *compiler-gnat*
 
-GNAT is the free (beer and speech) Ada compiler available. There are
-several versions available which differentiate in the licence terms used.
+GNAT is the only free (beer and speech) Ada compiler available. There are
+several versions available which differ in the licence terms used.
 
 The GNAT compiler plug-in will perform compile on standard command *:make* and
 then immediately shows the result. You can set the project file to be used by
@@ -194,7 +194,7 @@ TBD
 
 							 *g:ada_standard_types*
 g:ada_standard_types	bool (true when exists)
-		Highlight types in package Standard (e.g., "Float")
+		Highlight types in package Standard (e.g., "Float").
 
 							   *g:ada_space_errors*
 						   *g:ada_no_trail_space_error*
@@ -245,7 +245,7 @@ g:ada_folding		  set ('sigpft')
 
 								*g:ada_abbrev*
 g:ada_abbrev		  bool (true when exists)
-		Add some abbreviations. This feature more or less superseded
+		Add some abbreviations. This feature is more or less superseded
 		by the various completion methods.
 
 						      *g:ada_withuse_ordinary*
@@ -317,20 +317,20 @@ g:no_plugin_maps	bool (true when exists)
 g:no_ada_maps		bool (true when exists)
 		Disable all keyboard mappings.
 
-An "exists" type is a boolean is considered true when the variable is defined
-and false when the variable is undefined. The value which the variable is
-set makes no difference.
+An "exists" type is a boolean considered true when the variable is defined and
+false when the variable is undefined. The value to which the variable is set
+makes no difference.
 
 ------------------------------------------------------------------------------
-5.3 Commands ~
+5.2 Commands ~
 							     *ft-ada-commands*
 
 :AdaRainbow							 *:AdaRainbow*
 		Toggles rainbow colour (|g:ada_rainbow_color|) mode for
-		'(' and ')'
+		'(' and ')'.
 
 :AdaLines							   *:AdaLines*
-		Toggles line error (|g:ada_line_errors|) display
+		Toggles line error (|g:ada_line_errors|) display.
 
 :AdaSpaces							  *:AdaSpaces*
 		Toggles space error (|g:ada_space_errors|) display.
@@ -356,12 +356,12 @@ set makes no difference.
 g:gnat			    object
 		Control object which manages GNAT compiles.  The object
 		is created when the first Ada source code is loaded provided
-		that |g:ada_default_compiler| is set to 'gnat'. See |gnat_members|
-		for details.
+		that |g:ada_default_compiler| is set to 'gnat'. See
+		|gnat_members| for details.
 
 								      *g:alire*
 g:alire			    object
-		Control object which manages Alire compiles.  The object
+		Control object which manages Alire compiles. The object
 		is created when the first Ada source code is loaded provided
 		that |g:ada_default_compiler| is set to 'aliere'. See
 		|alire_members|for details.
@@ -374,7 +374,7 @@ All constants are locked. See |:lockvar| for details.
 
 							     *g:ada#WordRegex*
 g:ada#WordRegex		string
-		Regular expression to search for Ada words
+		Regular expression to search for Ada words.
 
 							  *g:ada#DotWordRegex*
 g:ada#DotWordRegex	string
@@ -382,7 +382,7 @@ g:ada#DotWordRegex	string
 
 							       *g:ada#Comment*
 g:ada#Comment		string
-		Regular expression to search for Ada comments
+		Regular expression to search for Ada comments.
 
 							      *g:ada#Keywords*
 g:ada#Keywords		list of dictionaries
@@ -391,11 +391,11 @@ g:ada#Keywords		list of dictionaries
 
 							   *g:ada#Ctags_Kinds*
 g:ada#Ctags_Kinds	dictionary of lists
-		Dictionary of the various kinds of items which the Ada
-		support	for Ctags generates.
+		Dictionary of the various kinds of items which the Ada support
+		for Ctags generates.
 
 ------------------------------------------------------------------------------
-5.2 Functions ~
+5.5 Functions ~
 							    *ft-ada-functions*
 
 ada#Word([{line}, {col}])					  *ada#Word()*
@@ -411,10 +411,10 @@ gnat#New ()
 
 
 ==============================================================================
-8. Extra Plugins ~
+6. Extra Plugins ~
 							   *ada-extra-plugins*
 
-You can optionally install the following extra plug-in. They work well with
+You can optionally install the following extra plug-ins. They work well with
 Ada and enhance the ability of the Ada mode:
 
 backup.vim
@@ -439,7 +439,7 @@ nerd_comments.vim
 matchit.vim
 	http://www.vim.org/scripts/script.php?script_id=39
 	'%' jumping for any language. The normal '%' jump only works for '{}'
-	style languages. The Ada mode will set the needed search patters.
+	style languages. The Ada mode will set the needed search patterns.
 
 taglist.vim
 	http://www.vim.org/scripts/script.php?script_id=273

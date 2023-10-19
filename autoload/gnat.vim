@@ -5,7 +5,7 @@
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
 "		Ned Okie <nokie@radford.edu>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.3.0
+"      Version: 5.5.0
 "      History: 24.05.2006 MK Unified Headers
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		05.08.2006 MK Add session support
@@ -17,6 +17,7 @@
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub und dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: compiler-gnat
 "------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ function gnat#Set_Project_File (...) dict			     " {{{1
       let self.Project_File = a:1
 
       if ! filereadable (self.Project_File)
-	      let self.Project_File = findfile (
+	 let self.Project_File = findfile (
 	    \ fnamemodify (self.Project_File, ':r'),
 	    \ $ADA_PROJECT_PATH,
 	    \ 1)
@@ -112,13 +113,13 @@ function gnat#New ()						     " {{{1
 			   \ '%f:%l:%c: %tedium: %m,'  .
 			   \ '%f:%l:%c: %tigh: %m,'    .
 			   \ '%f:%l:%c: %theck: %m,'   .
-			   \ '%f:%l:%c: (%ttyle) %m,'   .
+			   \ '%f:%l:%c: (%ttyle) %m,'  .
 			   \ '%f:%l:%c: %m'}
 
    return l:Retval
 endfunction gnat#New						  " }}}1
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

@@ -3,9 +3,10 @@
 "     Language: Ada (alire, Alire)
 "    Copyright: Copyright (C) 2022 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischi <krischik@users.sourceforge.net>k
-"      Version: 5.3.0
+"      Version: 5.5.0
 "      History: 25.10.2022 MK Add Alire compiler support
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
+"               21.08.2023 MK Release 5.5.0
 "    Help Page: compiler-alire
 "------------------------------------------------------------------------------
 
@@ -72,7 +73,7 @@ function alire#New ()						     " {{{1
    return l:Retval
 endfunction alire#New						  " }}}1
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

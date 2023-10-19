@@ -6,7 +6,8 @@
 "		Taylor Venable <taylor@metasyntax.net>
 "		Neil Bird <neil@fnxweb.com>
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.3.0
+" Contributors: Doug Kearns <dougkearns@gmail.com>
+"      Version: 5.5.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK ' should not be in iskeyword.
 "		16.07.2006 MK Ada-Mode as vim-ball
@@ -24,6 +25,10 @@
 "		25.10.2022 MK Add Alire compiler support
 "		25.10.2022 MK Toggle Rainbow Colour was missing parameters.
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
+"		04.11.2022 DK Improve matchit config
+"		04.11.2022 DK Define iabbrevs as buffer-local
+"		19.11.2022 MK Hotfix for comment setting. Messed up the ':'
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
@@ -46,25 +51,45 @@ let b:did_ftplugin = 45
 let s:cpoptions = &cpoptions
 set cpoptions-=C
 
+" Section: Keyword characters {{{1
+"
+" Valid character for keywords and identifiers. '_' is not a keyword character
+" but is included otherwise the syntax highlighter will detect keywords inside
+" identifier.
+"
+setlocal iskeyword=@,48-57,_
+setlocal isident=@,48-57,_
+
 " Section: Comments  {{{1
 "
-setlocal comments=O:--,:--\ \
+" GNAT prefers comments with two spaces after the double dash. First space is
+" defined with `\ ` the second with the b: option.
+"
+setlocal comments=b:--\ ,O:--
 setlocal commentstring=--\ \ %s
 setlocal complete=.,w,b,u,t,i
+
+let b:undo_ftplugin = "setlocal comments< commentstring< complete<"
 
 " Section: case	     {{{1
 "
 setlocal nosmartcase
 setlocal ignorecase
 
+let b:undo_ftplugin .= " | setlocal smartcase< ignorecase<"
+
 " Section: formatoptions {{{1
 "
 setlocal formatoptions+=ron
+
+let b:undo_ftplugin .= " | setlocal formatoptions<"
 
 " Section: Completion {{{1
 "
 setlocal completefunc=ada#User_Complete
 setlocal omnifunc=adacomplete#Complete
+
+let b:undo_ftplugin .= " | setlocal completefunc< omnifunc<"
 
 if exists ("g:ada_extended_completion")
    if mapcheck ('<C-N>','i') == ''
@@ -79,6 +104,10 @@ if exists ("g:ada_extended_completion")
    if mapcheck ('<bs>','i') == ''
       inoremap <silent> <unique> <buffer> <bs> <C-R>=ada#Insert_Backspace ()<cr>
    endif
+   let b:undo_ftplugin .= " | silent! execute 'iunmap <buffer> <C-N>'" .
+	    \             " | silent! execute 'iunmap <buffer> <C-P>'" .
+	    \             " | silent! execute 'iunmap <buffer> <C-X><C-]>'" .
+	    \             " | silent! execute 'iunmap <buffer> <bs>'"
 endif
 
 " Section: Matchit {{{1
@@ -93,11 +122,13 @@ if !exists ("b:match_words")  &&
    "
    let s:notend      = '\%(\<end\s\+\)\@<!'
    let b:match_words =
-      \ s:notend . '\<if\>:\<elsif\>:\<else\>:\<end\>\s\+\<if\>,' .
-      \ s:notend . '\<case\>:\<when\>:\<end\>\s\+\<case\>,' .
-      \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\>\s\+\<loop\>,' .
-      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\>\s*\%($\|[;A-Z]\),' .
-      \ s:notend . '\<record\>:\<end\>\s\+\<record\>'
+      \ s:notend . '\<if\>:\<elsif\>:\<\%(or\s\)\@3<!else\>:\<end\s\+if\>,' .
+      \ s:notend . '\<case\>:\<when\>:\<end\s\+case\>,' .
+      \ '\%(\<while\>.*\|\<for\>.*\|'.s:notend.'\)\<loop\>:\<end\s\+loop\>,' .
+      \ '\%(\<do\>\|\<begin\>\):\<exception\>:\<end\%(\s*\%($\|;\)\|\s\+\%(\%(if\|case\|loop\|record\)\>\)\@!\a\)\@=,' .
+      \ s:notend . '\<record\>:\<end\s\+record\>'
+   let b:undo_ftplugin .= " | unlet! b:match_skip b:match_words"
+   let b:match_skip = 's:Comment\|String\|Operator'
 endif
 
 
@@ -119,24 +150,32 @@ if exists("g:ada_folding")
       setlocal foldmethod=indent
       setlocal foldignore=--
       setlocal foldnestmax=5
+      let b:undo_ftplugin .= " | setlocal foldmethod< foldignore< foldnestmax<"
    elseif g:ada_folding[0] == 'g'
       setlocal foldmethod=expr
       setlocal foldexpr=ada#Pretty_Print_Folding(v:lnum)
+      let b:undo_ftplugin .= " | setlocal foldmethod< foldexpr<"
    elseif g:ada_folding[0] == 's'
       setlocal foldmethod=syntax
+      let b:undo_ftplugin .= " | setlocal foldmethod<"
    endif
    setlocal tabstop=8
    setlocal softtabstop=3
    setlocal shiftwidth=3
+   let b:undo_ftplugin .= " | setlocal tabstop< softtabstop< shiftwidth<"
 endif
 
 " Section: Abbrev {{{1
 "
 if exists("g:ada_abbrev")
-   iabbrev ret	return
-   iabbrev proc procedure
-   iabbrev pack package
-   iabbrev func function
+   iabbrev <buffer> ret  return
+   iabbrev <buffer> proc procedure
+   iabbrev <buffer> pack package
+   iabbrev <buffer> func function
+   let b:undo_ftplugin .= " | iunabbrev <buffer> ret" .
+	    \		  " | iunabbrev <buffer> proc" .
+	    \		  " | iunabbrev <buffer> pack" .
+	    \		  " | iunabbrev <buffer> func"
 endif
 
 " Section: Commands, Mapping, Menus {{{1
@@ -180,13 +219,14 @@ call ada#Map_Menu (
    \ '''standard_types''')
 
 endif
-" 1}}}
+
+" }}}1
 
 " Reset cpoptions
 let &cpoptions = s:cpoptions
 unlet s:cpoptions
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

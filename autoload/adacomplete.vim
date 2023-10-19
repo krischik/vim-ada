@@ -4,18 +4,19 @@
 "    Copyright: Copyright (C) 2006 … 2022 Martin Krischik
 "   Maintainer:	Martin Krischik
 "               Bartek Jasicki <thindil@laeran.pl>
-"      Version: 5.3.0
+"      Version: 5.5.0
 "      History: 24.05.2006 MK Unified Headers
 "		26.05.2006 MK improved search for begin of word.
 "		16.07.2006 MK Ada-Mode as vim-ball
 "		15.10.2006 MK Bram's suggestion for runtime integration
 "		05.11.2006 MK Bram suggested not to use include protection for
 "			      autoload
-"		05.11.2006 MK Bram suggested agaist using setlocal omnifunc
+"		05.11.2006 MK Bram suggested against using setlocal omnifunc 
 "		05.11.2006 MK Bram suggested to save on spaces
 "		28.08.2022 MK Merge Ada 2012 changes from thindil
 "		01.09.2022 MK Use GitHub and dein to publish new versions
 "		25.10.2022 MK Add Alire compiler support
+"               21.08.2023 MK Release 5.5.0
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-omni
 "------------------------------------------------------------------------------
@@ -95,7 +96,7 @@ function! adacomplete#Complete (findstart, base)
    endif
 endfunction adacomplete#Complete
 
-finish " 1}}}
+finish " }}}1
 
 "------------------------------------------------------------------------------
 "   Vim is Charityware - see ":help license" or uganda.txt for licence details.

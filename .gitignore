@@ -1,2 +1,12 @@
-*.orig
 *.swp
+.backups
+.DS_Store
+.idea
+.~lock.*
+b~c*
+Icon?
+Temp
+x
+#
+# vim: set nowrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab : 
+# vim: set textwidth=0 filetype=conf foldmethod=marker nospell : 
