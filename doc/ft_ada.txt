@@ -22,11 +22,10 @@ ADA								      *ada.vim*
 1. Syntax Highlighting ~
 							       *ft-ada-syntax*
 
-This mode is designed for the 2012 edition of Ada ("Ada 2012"), which includes
+This mode is designed for the 2022 edition of Ada ("Ada 2022"), which includes
 support for objected-programming, protected types, and so on.  It handles code
-written for the original Ada language ("Ada83", "Ada87", "Ada95", "Ada05") as
-well. For more information about Ada, see
-http://www.adapower.com.
+written for the original Ada language ("Ada83", "Ada87", "Ada95", "Ada05",
+"Ada2012") as well. For more information about Ada, see http://www.adapower.com.
 
 The Ada mode handles a number of situations cleanly.
 
@@ -182,7 +181,7 @@ g:gnat.Error_Format	string
 4.1 Alire~
 							       *compiler-alire*
 
-TBD
+TBD (It's supported but not yet documented)
 
 ==============================================================================
 5. References ~
@@ -216,7 +215,7 @@ g:ada_line_errors	  bool (true when exists)
 
 							 *g:ada_rainbow_color*
 g:ada_rainbow_color	  bool (true when exists)
-		Use rainbow colours for '(' and ')'. You need the
+		Use rainbow colours for '(', ')', '[' and ']'. You need the
 		Rainbow-Parenthesis plug-in for this to work
 
 							       *g:ada_folding*
@@ -302,6 +301,12 @@ g:ada_create_session	bool (true when exists)
 g:ada_with_gnat_project_files	 bool (true when exists)
 		 Add gnat project file keywords and Attributes.
 
+					            *g:ada_set_global_options*
+g:ada_set_global_options	 bool (true when exists)
+		 Add set ada specific global options. Not all options can be
+		 set with |:setlocal| and this options permits the bundle to
+		 use |:setglobal:| when |:setlocal| is not available
+
 5.1.1 Additional options ~
 
 Additional cross plug-in options supported by the Ada plug-in bundle:
@@ -364,7 +369,7 @@ g:alire			    object
 		Control object which manages Alire compiles. The object
 		is created when the first Ada source code is loaded provided
 		that |g:ada_default_compiler| is set to 'aliere'. See
-		|alire_members|for details.
+		|alire_members| for details.
 
 ------------------------------------------------------------------------------
 5.4 Constants ~
@@ -423,8 +428,8 @@ backup.vim
 
 rainbow_parenthsis.vim
 	https://github.com/krischik/vim-rainbow
-	Lightweight rainbow highlighter
-	More the sufficient for Ada since Ada uses only '(' and ')'.
+	Lightweight rainbow highlighter. More then sufficient for Ada since
+	Ada uses only '(', ')', '[' and ']'.
 
 Rainbow Parentheses Improved
 	https://github.com/luochen1990/rainbow

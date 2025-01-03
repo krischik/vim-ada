@@ -15,6 +15,8 @@
 "			      alternative to rainbow.
 "		25.10.2022 MK Add Alire compiler support
 "		28.10.2022 MK Issue #13 Fix key and menu mappings.
+"               23.01.2025 MK use setglobal for options which can't be set
+"			      local and make setting them optional. 
 "	 Usage: copy content into your .vimrc and change options to your
 "		likeing.
 "    Help Page: ft-ada-options
@@ -32,6 +34,7 @@ finish
 "  let	 g:ada_folding		       = 'gibxp'
 "  let	 g:ada_folding		       = 'spftc'
    let	 g:ada_rainbow_color	       = 1
+   let	 g:ada_set_global_options      = '1'
    let	 g:ada_space_errors	       = 1
    let	 g:ada_standard_types	       = 1
    let	 g:ada_with_gnat_project_files = 1

@@ -45,6 +45,10 @@ endif
 let s:keepcpo= &cpo
 set cpo&vim
 
+if exists ("b:undo_ftplugin")
+   let b:undo_ftplugin = ""
+endif
+
 " Section: Constants {{{1
 "
 let g:ada#DotWordRegex	   = '\a\w*\(\_s*\.\_s*\a\w*\)*'

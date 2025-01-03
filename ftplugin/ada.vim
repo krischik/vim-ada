@@ -29,6 +29,8 @@
 "		04.11.2022 DK Define iabbrevs as buffer-local
 "		19.11.2022 MK Hotfix for comment setting. Messed up the ':'
 "               21.08.2023 MK Release 5.5.0
+"               23.01.2025 MK use setglobal for options which can't be set
+"			      local and make setting them optional. 
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------
@@ -45,6 +47,10 @@ endif
 " Don't load another plugin for this buffer
 let b:did_ftplugin = 45
 
+if exists ("b:undo_ftplugin")
+   let b:undo_ftplugin = ""
+endif
+
 "
 " Temporarily set cpoptions to ensure the script loads OK
 "
@@ -58,7 +64,12 @@ set cpoptions-=C
 " identifier.
 "
 setlocal iskeyword=@,48-57,_
-setlocal isident=@,48-57,_
+
+if exists ("b:ada_set_global_options")
+   setglobal isident=@,48-57,_
+
+   let b:undo_ftplugin .= " | setglobal isident<"
+endif
 
 " Section: Comments  {{{1
 "
@@ -73,10 +84,12 @@ let b:undo_ftplugin = "setlocal comments< commentstring< complete<"
 
 " Section: case	     {{{1
 "
-setlocal nosmartcase
-setlocal ignorecase
+if exists ("b:ada_set_global_options")
+   setglobal nosmartcase
+   setglobal ignorecase
 
-let b:undo_ftplugin .= " | setlocal smartcase< ignorecase<"
+   let b:undo_ftplugin .= " | setglobal smartcase< ignorecase<"
+endif
 
 " Section: formatoptions {{{1
 "
