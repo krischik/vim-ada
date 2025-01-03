@@ -31,6 +31,10 @@
 "               21.08.2023 MK Release 5.5.0
 "               23.01.2025 MK use setglobal for options which can't be set
 "			      local and make setting them optional. 
+"               03.01.2025 DK use a list to build the s:AdaBlockStart indent pattern
+"			      Fix END indenting of TASK declarations
+"			      Add select statements to matchit
+"			      Highlight or in select statements
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-plugin
 "------------------------------------------------------------------------------

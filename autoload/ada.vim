@@ -35,6 +35,10 @@
 "		28.10.2022 MK Bug #43 Duplicated mappings in Gnat compiler
 "			      plug in
 "               21.08.2023 MK Release 5.5.0
+"               03.01.2025 DK use a list to build the s:AdaBlockStart indent pattern
+"			      Fix END indenting of TASK declarations
+"			      Add select statements to matchit
+"			      Highlight or in select statements
 "	 Usage: Use dein to install
 "    Help Page: ft-ada-functions
 "------------------------------------------------------------------------------
